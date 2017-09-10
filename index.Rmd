@@ -1,8 +1,9 @@
 ---
 title: "Beautiful graphics with ggplot2"
+author: Adrienne Marshall
 ---
 
-This document is the web-based version of a presentation given through the University of Idaho library workshop series on September 12, 2017. 
+This document is the web-based version of a presentation given through the University of Idaho library workshop series on September 12, 2017. The text is fairly sparse because this is primarily a reference based on workshop slides. However, it does provide plenty of examples that scaffold through ggplot2 complexity, and has a list of resources for learning more at the end. Good luck, and have fun!
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, message = FALSE, eval = TRUE, warning = FALSE)
@@ -76,6 +77,16 @@ Teach you enough that you know how to teach yourself more!
 - a facet specification
 
 If this is confusing, don't worry - the main message here is that there is a structured grammar underlying ggplot2. 
+
+## Let's try it!
+
+1. Download scripts from the following site: 
+
+2. Open RStudio
+
+3. In RStudio, open "install_packages.R". Highlight the text and click "Run".
+
+4. Still in RStudio, open "workshop_script.R". We'll work from this for the rest of the presentation. 
 
 ## Let's try it!
 
