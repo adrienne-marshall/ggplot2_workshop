@@ -198,24 +198,584 @@ $(document).ready(function () {
 </div>
 
 
-<p>Hello, Website!</p>
-<p>Session information:</p>
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.3.2 (2016-10-31)
-## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: macOS Sierra 10.12.5
-## 
-## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## loaded via a namespace (and not attached):
-##  [1] backports_1.0.4 magrittr_1.5    rprojroot_1.2   tools_3.3.2    
-##  [5] htmltools_0.3.6 yaml_2.1.14     Rcpp_0.12.12    stringi_1.1.5  
-##  [9] rmarkdown_1.6   knitr_1.15.1    stringr_1.2.0   digest_0.6.12  
-## [13] evaluate_0.10</code></pre>
+<p>This document is the web-based version of a presentation given through the University of Idaho library workshop series on September 12, 2017.</p>
+<div id="what-is-ggplot2" class="section level2">
+<h2>What is ggplot2?</h2>
+<ul>
+<li><p>an R package for data visualization</p></li>
+<li><p>implements the “grammar of graphics”</p></li>
+</ul>
+</div>
+<div id="why-ggplot2" class="section level2">
+<h2>Why ggplot2?</h2>
+<ul>
+<li><p>Popular (well-supported, great community)</p></li>
+<li><p>Open source (like all of R)</p></li>
+<li><p>Easy to use (after a learning curve)</p></li>
+<li><p>Aesthetically pleasing</p></li>
+<li><p>Built for multi-variate data</p></li>
+<li><p>Reproducible figures</p></li>
+</ul>
+</div>
+<div id="goals-for-today" class="section level2">
+<h2>Goals for today</h2>
+<p>Teach you enough that you know how to teach yourself more!</p>
+<ul>
+<li><p>Introduce “grammar of graphics” concepts</p></li>
+<li>Practice!
+<ul>
+<li>samples with built-in data</li>
+<li>preparing data</li>
+<li>samples with (more interesting?) data</li>
+</ul></li>
+</ul>
+</div>
+<div id="grammar-of-graphics" class="section level2">
+<h2>Grammar of graphics</h2>
+<ul>
+<li><p>data with variables mapped to aesthetics</p></li>
+<li><p>one or more geometric layers</p></li>
+<li><p>a scale for each aesthetic mapping</p></li>
+<li><p>a coordinate system</p></li>
+<li><p>a facet specification</p></li>
+</ul>
+<p>If this is confusing, don’t worry - the main message here is that there is a structured grammar underlying ggplot2.</p>
+</div>
+<div id="lets-try-it" class="section level2">
+<h2>Let’s try it!</h2>
+<p>First, we need data.</p>
+<p>Let’s use the built-in R dataset, “diamonds”.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">carat</th>
+<th align="left">cut</th>
+<th align="left">color</th>
+<th align="left">clarity</th>
+<th align="right">depth</th>
+<th align="right">table</th>
+<th align="right">price</th>
+<th align="right">x</th>
+<th align="right">y</th>
+<th align="right">z</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.23</td>
+<td align="left">Ideal</td>
+<td align="left">E</td>
+<td align="left">SI2</td>
+<td align="right">61.5</td>
+<td align="right">55</td>
+<td align="right">326</td>
+<td align="right">3.95</td>
+<td align="right">3.98</td>
+<td align="right">2.43</td>
+</tr>
+<tr class="even">
+<td align="right">0.21</td>
+<td align="left">Premium</td>
+<td align="left">E</td>
+<td align="left">SI1</td>
+<td align="right">59.8</td>
+<td align="right">61</td>
+<td align="right">326</td>
+<td align="right">3.89</td>
+<td align="right">3.84</td>
+<td align="right">2.31</td>
+</tr>
+<tr class="odd">
+<td align="right">0.23</td>
+<td align="left">Good</td>
+<td align="left">E</td>
+<td align="left">VS1</td>
+<td align="right">56.9</td>
+<td align="right">65</td>
+<td align="right">327</td>
+<td align="right">4.05</td>
+<td align="right">4.07</td>
+<td align="right">2.31</td>
+</tr>
+<tr class="even">
+<td align="right">0.29</td>
+<td align="left">Premium</td>
+<td align="left">I</td>
+<td align="left">VS2</td>
+<td align="right">62.4</td>
+<td align="right">58</td>
+<td align="right">334</td>
+<td align="right">4.20</td>
+<td align="right">4.23</td>
+<td align="right">2.63</td>
+</tr>
+<tr class="odd">
+<td align="right">0.31</td>
+<td align="left">Good</td>
+<td align="left">J</td>
+<td align="left">SI2</td>
+<td align="right">63.3</td>
+<td align="right">58</td>
+<td align="right">335</td>
+<td align="right">4.34</td>
+<td align="right">4.35</td>
+<td align="right">2.75</td>
+</tr>
+<tr class="even">
+<td align="right">0.24</td>
+<td align="left">Very Good</td>
+<td align="left">J</td>
+<td align="left">VVS2</td>
+<td align="right">62.8</td>
+<td align="right">57</td>
+<td align="right">336</td>
+<td align="right">3.94</td>
+<td align="right">3.96</td>
+<td align="right">2.48</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<pre class="r"><code>ggplot(data = diamonds)</code></pre>
+<p><img src="index_files/figure-html/diamonds1-1.png" width="672" /></p>
+</div>
+<div id="aesthetics-aes" class="section level2">
+<h2>Aesthetics: aes()</h2>
+<pre class="r"><code>ggplot(data = diamonds,
+       aes(x = carat, y = price))</code></pre>
+<p><img src="index_files/figure-html/diamonds2-1.png" width="672" /></p>
+</div>
+<div id="geometric-object-geom_" class="section level2">
+<h2>Geometric object: geom_</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point()</code></pre>
+<p><img src="index_files/figure-html/diamonds3-1.png" width="672" /></p>
+</div>
+<div id="add-more-aesthetics" class="section level2">
+<h2>Add more aesthetics…</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = carat, y = price, color = clarity)) +
+  geom_point()</code></pre>
+<p><img src="index_files/figure-html/diamonds4-1.png" width="672" /></p>
+</div>
+<div id="why-didnt-we-do-this" class="section level2">
+<h2>Why didn’t we do this?</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = carat, y = price), color = clarity) +
+  geom_point()</code></pre>
+<p><img src="index_files/figure-html/diamonds5-1.png" width="672" /></p>
+<p>Putting <code>rcolor = clarity</code> outside of the “aesthetics” call meant that ggplot didn’t know that it was supposed to map data to the “color” aesthetic.</p>
+</div>
+<div id="we-could-get-this-instead" class="section level2">
+<h2>We could get this instead:</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(color = &quot;magenta&quot;)</code></pre>
+<p><img src="index_files/figure-html/diamonds6-1.png" width="672" /></p>
+</div>
+<div id="our-original-plot" class="section level2">
+<h2>Our original plot</h2>
+<p>(with a small difference:)</p>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity))</code></pre>
+<p><img src="index_files/figure-html/diamonds7-1.png" width="672" /></p>
+</div>
+<div id="add-more-geoms" class="section level2">
+<h2>Add more geoms:</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) +
+  geom_smooth()</code></pre>
+<p><img src="index_files/figure-html/diamonds8-1.png" width="672" /></p>
+</div>
+<div id="change-geom-appearance" class="section level2">
+<h2>Change geom appearance:</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) +
+  geom_smooth(color = &quot;black&quot;, size = 0.8, linetype = 2)</code></pre>
+<p><img src="index_files/figure-html/diamonds9-1.png" width="672" /></p>
+</div>
+<div id="make-it-look-nicer" class="section level2">
+<h2>Make it look nicer:</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) +
+  geom_smooth(color = &quot;black&quot;, size = 0.8, linetype = 2) +
+  theme_few()</code></pre>
+<p><img src="index_files/figure-html/diamonds12-1.png" width="672" /></p>
+</div>
+<div id="try-facets" class="section level2">
+<h2>Try facets!</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) +
+  geom_smooth(color = &quot;black&quot;, size = 0.8, linetype = 2) +
+  facet_wrap(~cut)</code></pre>
+<p><img src="index_files/figure-html/diamonds10-1.png" width="672" /></p>
+</div>
+<div id="more-facets" class="section level2">
+<h2>More facets!</h2>
+<pre class="r"><code>ggplot(data = diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity), size = 0.5) +
+  facet_grid(color~cut)</code></pre>
+<p><img src="index_files/figure-html/diamonds11-1.png" width="672" /></p>
+</div>
+<div id="try-out-color-scales" class="section level2">
+<h2>Try out color scales</h2>
+<p>ColorBrewer is useful and popular:</p>
+<pre class="r"><code>ggplot(data = diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) +
+  theme_few() + 
+  scale_color_brewer(type = &quot;qual&quot;, palette = &quot;Set2&quot;)</code></pre>
+<p><img src="index_files/figure-html/set%20plot-1.png" width="672" /></p>
+</div>
+<div id="different-plot-types" class="section level2">
+<h2>Different plot types?</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = clarity, y = price)) +
+  geom_violin() </code></pre>
+<p><img src="index_files/figure-html/diamonds13-1.png" width="672" /></p>
+</div>
+<div id="try-an-extension" class="section level2">
+<h2>Try an extension:</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = price, y = cut)) +
+  geom_joy()</code></pre>
+<p><img src="index_files/figure-html/diamonds14-1.png" width="672" /></p>
+</div>
+<div id="adjust-color-scales" class="section level2">
+<h2>Adjust color scales:</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = price, y = cut, color = cut, fill = cut)) +
+  geom_joy(alpha = 0.6, scale = 5) +
+  scale_fill_viridis(option = &quot;A&quot;, discrete = TRUE) +
+  scale_color_viridis(option = &quot;A&quot;, discrete = TRUE) + 
+  theme_few()</code></pre>
+<p><img src="index_files/figure-html/diamonds%20viridis-1.png" width="672" /></p>
+</div>
+<div id="another-color-scale" class="section level2">
+<h2>Another color scale:</h2>
+<pre class="r"><code>ggplot(data = diamonds, 
+       aes(x = price, y = cut, fill = cut)) +
+  geom_joy(alpha = 1, scale = 5) +
+  scale_fill_manual(values = wes_palette(&quot;Darjeeling&quot;)) +
+  theme_few()</code></pre>
+<p><img src="index_files/figure-html/diamonds%20wes-1.png" width="672" /></p>
+</div>
+<div id="sometimes-we-need-to-transform-data." class="section level2">
+<h2>Sometimes we need to transform data.</h2>
+<pre class="r"><code>kable(head(iris))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Sepal.Length</th>
+<th align="right">Sepal.Width</th>
+<th align="right">Petal.Length</th>
+<th align="right">Petal.Width</th>
+<th align="left">Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">5.1</td>
+<td align="right">3.5</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">4.9</td>
+<td align="right">3.0</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">4.7</td>
+<td align="right">3.2</td>
+<td align="right">1.3</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">4.6</td>
+<td align="right">3.1</td>
+<td align="right">1.5</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">5.0</td>
+<td align="right">3.6</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">5.4</td>
+<td align="right">3.9</td>
+<td align="right">1.7</td>
+<td align="right">0.4</td>
+<td align="left">setosa</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="wide-or-long" class="section level2">
+<h2>Wide or long?</h2>
+<pre class="r"><code>iris_long &lt;- melt(iris, id.vars = (&quot;Species&quot;))
+kable(head(iris_long))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Species</th>
+<th align="left">variable</th>
+<th align="right">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">setosa</td>
+<td align="left">Sepal.Length</td>
+<td align="right">5.1</td>
+</tr>
+<tr class="even">
+<td align="left">setosa</td>
+<td align="left">Sepal.Length</td>
+<td align="right">4.9</td>
+</tr>
+<tr class="odd">
+<td align="left">setosa</td>
+<td align="left">Sepal.Length</td>
+<td align="right">4.7</td>
+</tr>
+<tr class="even">
+<td align="left">setosa</td>
+<td align="left">Sepal.Length</td>
+<td align="right">4.6</td>
+</tr>
+<tr class="odd">
+<td align="left">setosa</td>
+<td align="left">Sepal.Length</td>
+<td align="right">5.0</td>
+</tr>
+<tr class="even">
+<td align="left">setosa</td>
+<td align="left">Sepal.Length</td>
+<td align="right">5.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="plot-the-data" class="section level2">
+<h2>Plot the data:</h2>
+<pre class="r"><code>ggplot(iris_long, aes(x = Species, y = value, fill = variable)) +
+  geom_bar(stat = &#39;identity&#39;, width = 1) +
+  theme_bw()</code></pre>
+<p><img src="index_files/figure-html/iris%20plot-1.png" width="672" /></p>
+</div>
+<div id="change-coordinates" class="section level2">
+<h2>Change coordinates</h2>
+<pre class="r"><code>ggplot(iris_long, 
+       aes(x = Species, y = value, color = variable, fill = variable)) +
+  geom_bar(stat = &#39;identity&#39;, width = 1) +
+  coord_polar(theta = &#39;x&#39;) +
+  theme_bw()</code></pre>
+<p><img src="index_files/figure-html/iris%20plot%20polar-1.png" width="672" /></p>
+</div>
+<div id="try-out-a-new-dataset" class="section level2">
+<h2>Try out a new dataset:</h2>
+<pre class="r"><code>kable(head(gapminder))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">country</th>
+<th align="left">continent</th>
+<th align="right">year</th>
+<th align="right">lifeExp</th>
+<th align="right">pop</th>
+<th align="right">gdpPercap</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Afghanistan</td>
+<td align="left">Asia</td>
+<td align="right">1952</td>
+<td align="right">28.801</td>
+<td align="right">8425333</td>
+<td align="right">779.4453</td>
+</tr>
+<tr class="even">
+<td align="left">Afghanistan</td>
+<td align="left">Asia</td>
+<td align="right">1957</td>
+<td align="right">30.332</td>
+<td align="right">9240934</td>
+<td align="right">820.8530</td>
+</tr>
+<tr class="odd">
+<td align="left">Afghanistan</td>
+<td align="left">Asia</td>
+<td align="right">1962</td>
+<td align="right">31.997</td>
+<td align="right">10267083</td>
+<td align="right">853.1007</td>
+</tr>
+<tr class="even">
+<td align="left">Afghanistan</td>
+<td align="left">Asia</td>
+<td align="right">1967</td>
+<td align="right">34.020</td>
+<td align="right">11537966</td>
+<td align="right">836.1971</td>
+</tr>
+<tr class="odd">
+<td align="left">Afghanistan</td>
+<td align="left">Asia</td>
+<td align="right">1972</td>
+<td align="right">36.088</td>
+<td align="right">13079460</td>
+<td align="right">739.9811</td>
+</tr>
+<tr class="even">
+<td align="left">Afghanistan</td>
+<td align="left">Asia</td>
+<td align="right">1977</td>
+<td align="right">38.438</td>
+<td align="right">14880372</td>
+<td align="right">786.1134</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="take-a-look-at-the-data" class="section level2">
+<h2>Take a look at the data:</h2>
+<pre class="r"><code>ggplot(gapminder,
+       aes(x = year, y = lifeExp, color = gdpPercap)) +
+  geom_line(aes(group = country)) +
+  facet_grid(continent~.) +
+  scale_color_viridis(trans = &quot;log&quot;) +
+  theme_few()</code></pre>
+<p><img src="index_files/figure-html/test%20gapminder-1.png" width="672" /></p>
+</div>
+<div id="a-scatter-plot" class="section level2">
+<h2>A scatter plot:</h2>
+<pre class="r"><code>ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()</code></pre>
+<p><img src="index_files/figure-html/gapminder%20plots-1.png" width="672" /></p>
+</div>
+<div id="whos-the-outlier" class="section level2">
+<h2>Who’s the outlier?</h2>
+<pre class="r"><code>gapminder %&gt;% filter(gdpPercap &gt; 60000)</code></pre>
+<pre><code>## # A tibble: 5 x 6
+##   country continent  year lifeExp    pop gdpPercap
+##    &lt;fctr&gt;    &lt;fctr&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt;
+## 1  Kuwait      Asia  1952  55.565 160000 108382.35
+## 2  Kuwait      Asia  1957  58.033 212846 113523.13
+## 3  Kuwait      Asia  1962  60.470 358266  95458.11
+## 4  Kuwait      Asia  1967  64.624 575003  80894.88
+## 5  Kuwait      Asia  1972  67.712 841934 109347.87</code></pre>
+</div>
+<div id="deal-with-overplotting" class="section level2">
+<h2>Deal with overplotting:</h2>
+<pre class="r"><code>ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_hex()</code></pre>
+<p><img src="index_files/figure-html/gapminder%20hex-1.png" width="672" /></p>
+</div>
+<div id="another-way-to-avoid-overplotting" class="section level2">
+<h2>Another way to avoid overplotting:</h2>
+<pre class="r"><code>ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_density2d(aes(color = ..level..), bins = 20) +
+  scale_color_viridis()</code></pre>
+<p><img src="index_files/figure-html/gapminder%20contour-1.png" width="672" /></p>
+</div>
+<div id="a-little-more-complicated" class="section level2">
+<h2>A little more complicated:</h2>
+<pre class="r"><code>p &lt;- ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(aes(color = continent, size = pop), alpha = 0.8) +
+  scale_x_continuous(trans = &#39;log&#39;) +
+  facet_wrap(~year) +
+  scale_color_brewer(type = &quot;Qual&quot;, palette = &quot;Accent&quot;) +
+  theme_hc(bgc = &#39;darkunica&#39;) +
+  theme(text = element_text(size = 9))</code></pre>
+</div>
+<div id="a-little-more-complicated-1" class="section level2">
+<h2>A little more complicated:</h2>
+<pre class="r"><code>p</code></pre>
+<p><img src="index_files/figure-html/view%20gapminder%20faceted-1.png" width="864" /></p>
+</div>
+<div id="lets-make-a-map" class="section level2">
+<h2>Let’s make a map!</h2>
+<p>Prepare data:</p>
+<pre class="r"><code>country_df &lt;- map_data(&#39;world&#39;) %&gt;%
+  rename(&quot;country&quot; = &quot;region&quot;) 
+country_df$country[country_df$country == &quot;USA&quot;] &lt;- &quot;United States&quot;
+
+#Take the mean across all years for each country:
+gapminder_means &lt;- gapminder %&gt;% 
+  group_by(country, continent) %&gt;%
+  summarise(lifeExp = mean(lifeExp),
+            pop = mean(pop),
+            gdpPercap = mean(gdpPercap))
+
+plot_dat &lt;- left_join(gapminder_means, country_df, by = &quot;country&quot;)</code></pre>
+</div>
+<div id="make-the-map" class="section level2">
+<h2>Make the map:</h2>
+<pre class="r"><code>ggplot(plot_dat) +
+  geom_polygon(aes(x = long, y = lat, fill = lifeExp, group = group)) +
+  scale_fill_viridis(option = &quot;A&quot;) + 
+  coord_quickmap() +
+  theme_few()</code></pre>
+<p><img src="index_files/figure-html/gapminder%20map2-1.png" width="672" /></p>
+</div>
+<div id="more-plot-ideas" class="section level2">
+<h2>More plot ideas?</h2>
+<ul>
+<li><p>What questions could we ask with this data?</p></li>
+<li><p>How could we visually answer those questions?</p></li>
+</ul>
+</div>
+<div id="where-to-learn-more" class="section level2">
+<h2>Where to learn more:</h2>
+<p><small></p>
+<ul>
+<li>Stack Overflow/Google</li>
+<li>Books:
+<ul>
+<li>R for Data Science: <a href="http://r4ds.had.co.nz/program-intro.html" class="uri">http://r4ds.had.co.nz/program-intro.html</a></li>
+<li>Ggplot2: Elegant graphics for data analysis: <a href="https://www.amazon.com/ggplot2-Elegant-Graphics-Data-Analysis/dp/0387981403" class="uri">https://www.amazon.com/ggplot2-Elegant-Graphics-Data-Analysis/dp/0387981403</a> (may also be available for free at github).</li>
+<li>Data visualization for social science: <a href="http://socviz.co/" class="uri">http://socviz.co/</a></li>
+</ul></li>
+<li>Papers:
+<ul>
+<li>Wickham grammar of graphics: <a href="http://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf" class="uri">http://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf</a></li>
+<li>Wickham tidy data: <a href="https://www.jstatsoft.org/article/view/v059i10" class="uri">https://www.jstatsoft.org/article/view/v059i10</a></li>
+</ul></li>
+<li>Tutorials, cheatsheets, websites:
+<ul>
+<li><a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf</a></li>
+<li><a href="http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html" class="uri">http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html</a></li>
+<li><a href="http://www.ggplot2-exts.org/gallery/" class="uri">http://www.ggplot2-exts.org/gallery/</a></li>
+</ul></li>
+<li>Twitter:
+<ul>
+<li><span class="citation">@hadleywickham</span>, <span class="citation">@ClausWilke</span>, <span class="citation">@JennyBryan</span>, <span class="citation">@RLadiesGlobal</span>, <span class="citation">@rstudiotips</span></li>
+</ul></li>
+</ul>
+<p></small></p>
+</div>
+<div id="questions" class="section level2">
+<h2>Questions?</h2>
+<p>Thanks!</p>
+<p><small> Adrienne Marshall <a href="mailto:mars7850@vandals.uidaho.edu">mars7850@vandals.uidaho.edu</a> </small></p>
+</div>
 
 
 

@@ -2,7 +2,429 @@
 title: "Beautiful graphics with ggplot2"
 ---
 
-Hello, Website!
+This document is the web-based version of a presentation given through the University of Idaho library workshop series on September 12, 2017. 
 
-```{r, child="_sessioninfo.Rmd"}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, message = FALSE, eval = TRUE, warning = FALSE)
+
+#Load libraries:
+
+#Data organizing:
+library(tidyverse)
+library(data.table)
+
+#Palettes and visualization:
+library(viridis)
+library(RColorBrewer)
+library(wesanderson)
+library(ggthemes)
+library(ggjoy)
+
+#Data
+library(gapminder)
+library(maptools)
+
+#Presentation tools:
+library(knitr)
+library(revealjs)
 ```
+
+
+## What is ggplot2?
+
+-  an R package for data visualization
+
+- implements the "grammar of graphics"
+
+
+## Why ggplot2?
+
+- Popular (well-supported, great community)
+
+- Open source (like all of R)
+
+- Easy to use (after a learning curve)
+
+- Aesthetically pleasing
+
+- Built for multi-variate data
+
+- Reproducible figures
+
+## Goals for today
+
+Teach you enough that you know how to teach yourself more!
+
+- Introduce "grammar of graphics" concepts
+
+- Practice!
+      + samples with built-in data
+      + preparing data
+      + samples with (more interesting?) data
+
+
+## Grammar of graphics
+
+- data with variables mapped to aesthetics
+
+- one or more geometric layers 
+
+- a scale for each aesthetic mapping
+
+- a coordinate system
+
+- a facet specification
+
+If this is confusing, don't worry - the main message here is that there is a structured grammar underlying ggplot2. 
+
+## Let's try it!
+
+First, we need data. 
+
+Let's use the built-in R dataset, "diamonds".
+
+```{r diamonds, echo = FALSE}
+kable(head(diamonds))
+```
+
+## Data
+
+```{r diamonds1, echo = TRUE}
+ggplot(data = diamonds)
+
+```
+
+## Aesthetics: aes()
+
+```{r diamonds2, echo = TRUE}
+ggplot(data = diamonds,
+       aes(x = carat, y = price))
+
+```
+
+## Geometric object: geom_
+
+```{r diamonds3, echo = TRUE}
+ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point()
+
+```
+
+## Add more aesthetics...
+
+```{r diamonds4, echo = TRUE}
+ggplot(data = diamonds, 
+       aes(x = carat, y = price, color = clarity)) +
+  geom_point()
+
+```
+
+
+## Why didn't we do this?
+
+```{r diamonds5, echo = TRUE}
+ggplot(data = diamonds, 
+       aes(x = carat, y = price), color = clarity) +
+  geom_point()
+
+```
+
+Putting `rcolor = clarity` outside of the "aesthetics" call meant that ggplot didn't know that it was supposed to map data to the "color" aesthetic. 
+
+## We could get this instead:
+
+```{r diamonds6, echo = TRUE}
+ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(color = "magenta")
+
+```
+
+## Our original plot
+(with a small difference:)
+
+```{r diamonds7, echo = TRUE}
+ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity))
+
+```
+
+## Add more geoms:
+
+```{r diamonds8, echo = TRUE, message = FALSE}
+ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) +
+  geom_smooth()
+```
+
+## Change geom appearance:
+
+```{r diamonds9, echo = TRUE, message = FALSE}
+ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) +
+  geom_smooth(color = "black", size = 0.8, linetype = 2)
+
+```
+
+## Make it look nicer:
+
+```{r diamonds12, echo = TRUE, message = FALSE}
+ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) +
+  geom_smooth(color = "black", size = 0.8, linetype = 2) +
+  theme_few()
+```
+
+
+## Try facets!
+
+```{r diamonds10, echo = TRUE, message = FALSE}
+ggplot(data = diamonds, 
+       aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) +
+  geom_smooth(color = "black", size = 0.8, linetype = 2) +
+  facet_wrap(~cut)
+
+```
+
+## More facets!
+
+```{r diamonds11, echo = TRUE, message = FALSE}
+ggplot(data = diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity), size = 0.5) +
+  facet_grid(color~cut)
+```
+
+## Try out color scales
+
+ColorBrewer is useful and popular:
+```{r set plot}
+ggplot(data = diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) +
+  theme_few() + 
+  scale_color_brewer(type = "qual", palette = "Set2")
+
+```
+
+## Different plot types?
+
+```{r diamonds13, echo = TRUE, message = FALSE}
+ggplot(data = diamonds, 
+       aes(x = clarity, y = price)) +
+  geom_violin() 
+
+```
+
+## Try an extension:
+
+```{r diamonds14, echo = TRUE, message = FALSE}
+ggplot(data = diamonds, 
+       aes(x = price, y = cut)) +
+  geom_joy()
+
+```
+
+## Adjust color scales:
+
+```{r diamonds viridis, echo = TRUE, message = FALSE}
+ggplot(data = diamonds, 
+       aes(x = price, y = cut, color = cut, fill = cut)) +
+  geom_joy(alpha = 0.6, scale = 5) +
+  scale_fill_viridis(option = "A", discrete = TRUE) +
+  scale_color_viridis(option = "A", discrete = TRUE) + 
+  theme_few()
+
+```
+
+## Another color scale: 
+```{r diamonds wes, echo = TRUE, message = FALSE}
+ggplot(data = diamonds, 
+       aes(x = price, y = cut, fill = cut)) +
+  geom_joy(alpha = 1, scale = 5) +
+  scale_fill_manual(values = wes_palette("Darjeeling")) +
+  theme_few()
+
+```
+
+## Sometimes we need to transform data.
+
+```{r iris melt}
+kable(head(iris))
+
+```
+
+## Wide or long?
+
+```{r iris melt2}
+iris_long <- melt(iris, id.vars = ("Species"))
+kable(head(iris_long))
+
+```
+
+## Plot the data:
+
+```{r iris plot}
+ggplot(iris_long, aes(x = Species, y = value, fill = variable)) +
+  geom_bar(stat = 'identity', width = 1) +
+  theme_bw()
+
+```
+
+## Change coordinates
+
+```{r iris plot polar}
+ggplot(iris_long, 
+       aes(x = Species, y = value, color = variable, fill = variable)) +
+  geom_bar(stat = 'identity', width = 1) +
+  coord_polar(theta = 'x') +
+  theme_bw()
+
+```
+
+
+## Try out a new dataset:
+
+```{r look at gapminder}
+kable(head(gapminder))
+```
+
+## Take a look at the data:
+
+```{r test gapminder}
+ggplot(gapminder,
+       aes(x = year, y = lifeExp, color = gdpPercap)) +
+  geom_line(aes(group = country)) +
+  facet_grid(continent~.) +
+  scale_color_viridis(trans = "log") +
+  theme_few()
+
+```
+
+## A scatter plot:
+
+```{r gapminder plots}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+
+```
+
+## Who's the outlier?
+
+```{r gapminder outlier}
+gapminder %>% filter(gdpPercap > 60000)
+
+```
+
+
+## Deal with overplotting:
+
+```{r gapminder hex}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_hex()
+
+```
+
+## Another way to avoid overplotting:
+
+```{r gapminder contour}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_density2d(aes(color = ..level..), bins = 20) +
+  scale_color_viridis()
+
+```
+
+
+## A little more complicated:
+
+```{r make gapminder faceted}
+p <- ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(aes(color = continent, size = pop), alpha = 0.8) +
+  scale_x_continuous(trans = 'log') +
+  facet_wrap(~year) +
+  scale_color_brewer(type = "Qual", palette = "Accent") +
+  theme_hc(bgc = 'darkunica') +
+  theme(text = element_text(size = 9))
+
+```
+
+## A little more complicated:
+
+```{r view gapminder faceted, fig.height = 5, fig.width = 9}
+p
+
+```
+
+## Let's make a map!
+
+Prepare data: 
+```{r gapminder map}
+country_df <- map_data('world') %>%
+  rename("country" = "region") 
+country_df$country[country_df$country == "USA"] <- "United States"
+
+#Take the mean across all years for each country:
+gapminder_means <- gapminder %>% 
+  group_by(country, continent) %>%
+  summarise(lifeExp = mean(lifeExp),
+            pop = mean(pop),
+            gdpPercap = mean(gdpPercap))
+
+plot_dat <- left_join(gapminder_means, country_df, by = "country")
+```
+
+## Make the map: 
+
+```{r gapminder map2}
+ggplot(plot_dat) +
+  geom_polygon(aes(x = long, y = lat, fill = lifeExp, group = group)) +
+  scale_fill_viridis(option = "A") + 
+  coord_quickmap() +
+  theme_few()
+```
+
+
+## More plot ideas?
+
+- What questions could we ask with this data?
+
+- How could we visually answer those questions?
+
+## Where to learn more:
+<small>
+
+- Stack Overflow/Google
+- Books:
+    + R for Data Science: http://r4ds.had.co.nz/program-intro.html
+    + Ggplot2: Elegant graphics for data analysis: https://www.amazon.com/ggplot2-Elegant-Graphics-Data-Analysis/dp/0387981403 (may also be available for free at github).
+    + Data visualization for social science: http://socviz.co/
+- Papers:
+    + Wickham grammar of graphics: http://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf
+    + Wickham tidy data: https://www.jstatsoft.org/article/view/v059i10
+- Tutorials, cheatsheets, websites:
+    + https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
+    + http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
+    + http://www.ggplot2-exts.org/gallery/
+- Twitter:
+    + @hadleywickham, @ClausWilke, @JennyBryan, @RLadiesGlobal, @rstudiotips
+    
+</small>
+
+
+
+## Questions?
+Thanks!
+
+<small> Adrienne Marshall
+mars7850@vandals.uidaho.edu
+</small>
+
+
+
+
+
+
