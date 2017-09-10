@@ -2,7 +2,6 @@
 title: "Content from University of Idaho library workshop series"
 ---
 
-More about this website.
-
-```{r, child="_sessioninfo.Rmd"}
-```
+This website hosts content from the University of Idaho library workshop "Beautiful graphics with ggplot2". If you have any questions, please get in touch with the author:
+Adrienne Marshall
+mars7850@vandals.uidaho.edu

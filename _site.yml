@@ -1,7 +1,7 @@
 name: "my-website"
 output_dir: "."
 navbar:
-  title: "My Website"
+  title: "Beautiful graphics with ggplot2"
   left:
     - text: "Home"
       href: index.html
