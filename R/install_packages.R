@@ -3,7 +3,7 @@
 # It may take several minutes to run.
 
 #List the packages we need.
-packages <- c("tidyverse", "data.table", "viridis", "RColorBrewer",
+packages <- c("ggplot2", "dplyr", "data.table", "viridis", "RColorBrewer",
               "wesanderson", "ggthemes", "ggjoy", "gapminder", "maptools")
 
 #Install packages if they are not already installed. 

@@ -1,5 +1,0 @@
----
-title: "Beautiful graphics with ggplot2"
----
-
-Hello, Website!

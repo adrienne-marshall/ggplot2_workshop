@@ -38,6 +38,9 @@ library(knitr)
 library(revealjs)
 ```
 
+## Who are you?
+
+## Who am I?
 
 ## What is ggplot2?
 
@@ -60,35 +63,35 @@ library(revealjs)
 
 - Reproducible figures
 
-## Why ggplot2?
+## London population over time:
 
 ```{r image 1, out.width = "500px", echo = FALSE}
 knitr::include_graphics("../samples/spatial_facets.png")
 ```
 <small>http://spatial.ly/2013/12/introduction-spatial-data-ggplot2/ </small>
 
-## Why ggplot2?
+##Single-nucleotide polymorphisms:
 
 ```{r image polar, out.width = "600px", echo = FALSE}
 knitr::include_graphics("../samples/polar_histogram.png")
 ```
 <small>http://chrisladroue.com/2012/02/polar-histogram-pretty-and-useful/</small>
 
-## Why ggplot2?
+## Measles occurrence in 50 states
 
 ```{r image 2, out.width = "600px", echo = FALSE}
 knitr::include_graphics("../samples/measles.png")
 ```
 <small>https://benjaminlmoore.wordpress.com/tag/ggplot2/</small>
 
-## Why ggplot2?
+## Europe's population
 
 ```{r image 4, out.width = "500px", echo = FALSE}
 knitr::include_graphics("../samples/europe_map.png")
 ```
 <small>http://blog.revolutionanalytics.com/2017/04/where-europe-lives.html?utm_content=buffer211f8&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer</small>
 
-## Why ggplot2?
+## Global remittances
 
 ```{r image 5, out.width = "500px", echo = FALSE}
 knitr::include_graphics("../samples/world_flows.jpg")
@@ -96,7 +99,7 @@ knitr::include_graphics("../samples/world_flows.jpg")
 <small>https://twitter.com/bettermeasured/status/885956556046643200</small>
 
 
-## Why ggplot2?
+## Plant structure
 
 ```{r image 6, out.width = "300px", echo = FALSE}
 knitr::include_graphics("../samples/plant1.png")
@@ -104,14 +107,14 @@ knitr::include_graphics("../samples/plant1.png")
 
 <small> https://fronkonstin.com/2017/07/18/plants/ </small>
 
-## Why ggplot2?
+## London cycle hires
 
 ```{r image 7, out.width = "600px", echo = FALSE}
 knitr::include_graphics("../samples/london_cycle.jpg")
 ```
 <small> http://spatial.ly/2012/02/great-maps-ggplot2/ </small>
 
-## Why ggplot2?
+## Relationship status by age
 
 ```{r image 8, out.width = "600px", echo = FALSE}
 knitr::include_graphics("../samples/london_relationships.jpg")
@@ -131,28 +134,22 @@ Teach you enough that you know how to teach yourself more!
       + samples with built-in data
       + preparing data
       + samples with (more interesting?) data
+      
+- Send you away with a list of resouces
 
 
 ## Grammar of graphics
 
-- data with variables mapped to aesthetics
+```{r ggplot sample, eval = FALSE}
+ggplot(data = diamonds, aes(x = carat, y = price, color = clarity)) +
+  geom_point() +
+  facet_grid(color ~ cut)
+```
 
-- one or more geometric layers 
-
-- a scale for each aesthetic mapping
-
-- a coordinate system
-
-- a facet specification
-
-## Confused?
-
-## Grammar of graphics main message:
-There is one.
 
 ## Let's try it!
 
-1. Download scripts from the following site: 
+1. Download scripts from the following site: https://is.gd/IYoXwA
 
 2. Open RStudio
 
@@ -311,8 +308,7 @@ ggplot(data = diamonds,
 
 ```
 
-## Adjust color scales:
-
+## Choose colors: scale_color_...
 ```{r diamonds viridis, echo = TRUE, message = FALSE}
 ggplot(data = diamonds, 
        aes(x = price, y = cut, color = cut, fill = cut)) +
@@ -375,17 +371,6 @@ ggplot(iris_long,
 kable(head(gapminder))
 ```
 
-## Take a look at the data:
-
-```{r test gapminder}
-ggplot(gapminder,
-       aes(x = year, y = lifeExp, color = gdpPercap)) +
-  geom_line(aes(group = country)) +
-  facet_grid(continent~.) +
-  scale_color_viridis(trans = "log") +
-  theme_few()
-
-```
 
 ## A scatter plot:
 
@@ -394,6 +379,8 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()
 
 ```
+
+Who's the outlier?
 
 ## Who's the outlier?
 
@@ -499,7 +486,7 @@ ggplot(plot_dat) +
 - Twitter:
     + @hadleywickham, @ClausWilke, @JennyBryan, @RLadiesGlobal, @rstudiotips
     
-
+- This presentation! https://adrienne-marshall.github.io/ggplot2_workshop/index.html
 
 
 

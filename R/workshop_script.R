@@ -17,6 +17,7 @@ library(maptools)
 
 
 # Diamonds data: -----------
+#Head shows the columns of the dataset "diamonds".
 head(diamonds)
 
 ##

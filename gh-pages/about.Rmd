@@ -1,6 +1,0 @@
----
-title: "University of Idaho Library Workshop Series: Beautiful Graphics with ggplot2"
-author: "Adrienne Marshall"
----
-
-More about this website.
