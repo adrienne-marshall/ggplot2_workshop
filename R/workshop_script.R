@@ -19,71 +19,86 @@ library(maptools)
 # Diamonds data: -----------
 head(diamonds)
 
-
+##
 ggplot(data = diamonds)
 
+##
 ggplot(data = diamonds,
        aes(x = carat, y = price))
 
+##
 ggplot(data = diamonds, 
        aes(x = carat, y = price)) +
   geom_point()
 
+##
 ggplot(data = diamonds, 
        aes(x = carat, y = price, color = clarity)) +
   geom_point()
 
+##
 ggplot(data = diamonds, 
        aes(x = carat, y = price), color = clarity) +
   geom_point()
 
+##
 ggplot(data = diamonds, 
        aes(x = carat, y = price)) +
   geom_point(color = "magenta")
 
+##
 ggplot(data = diamonds, 
        aes(x = carat, y = price)) +
   geom_point(aes(color = clarity))
 
+##
 ggplot(data = diamonds, 
        aes(x = carat, y = price)) +
   geom_point(aes(color = clarity)) +
   geom_smooth()
 
+##
 ggplot(data = diamonds, 
        aes(x = carat, y = price)) +
   geom_point(aes(color = clarity)) +
   geom_smooth(color = "black", size = 0.8, linetype = 2)
 
+##
 ggplot(data = diamonds, 
        aes(x = carat, y = price)) +
   geom_point(aes(color = clarity)) +
   geom_smooth(color = "black", size = 0.8, linetype = 2) +
   theme_few()
 
+##
 ggplot(data = diamonds, 
        aes(x = carat, y = price)) +
   geom_point(aes(color = clarity)) +
   geom_smooth(color = "black", size = 0.8, linetype = 2) +
   facet_wrap(~cut)
 
+##
 ggplot(data = diamonds, aes(x = carat, y = price)) +
   geom_point(aes(color = clarity), size = 0.5) +
   facet_grid(color~cut)
 
+##
 ggplot(data = diamonds, aes(x = carat, y = price)) +
   geom_point(aes(color = clarity)) +
   theme_few() + 
   scale_color_brewer(type = "qual", palette = "Set2")
 
+##
 ggplot(data = diamonds, 
        aes(x = clarity, y = price)) +
   geom_violin() 
 
+##
 ggplot(data = diamonds, 
        aes(x = price, y = cut)) +
   geom_joy()
 
+##
 ggplot(data = diamonds, 
        aes(x = price, y = cut, color = cut, fill = cut)) +
   geom_joy(alpha = 0.6, scale = 5) +
@@ -91,6 +106,7 @@ ggplot(data = diamonds,
   scale_color_viridis(option = "A", discrete = TRUE) + 
   theme_few()
 
+##
 ggplot(data = diamonds, 
        aes(x = price, y = cut, fill = cut)) +
   geom_joy(alpha = 1, scale = 5) +
@@ -100,13 +116,16 @@ ggplot(data = diamonds,
 ## Iris data: -------------
 head(iris)
 
+##
 iris_long <- melt(iris, id.vars = ("Species"))
 head(iris_long)
 
+##
 ggplot(iris_long, aes(x = Species, y = value, fill = variable)) +
   geom_bar(stat = 'identity', width = 1) +
   theme_bw()
 
+##
 ggplot(iris_long, 
        aes(x = Species, y = value, color = variable, fill = variable)) +
   geom_bar(stat = 'identity', width = 1) +
@@ -116,6 +135,7 @@ ggplot(iris_long,
 ## Gapminder data: ----------------
 head(gapminder)
 
+##
 ggplot(gapminder,
        aes(x = year, y = lifeExp, color = gdpPercap)) +
   geom_line(aes(group = country)) +
@@ -123,18 +143,23 @@ ggplot(gapminder,
   scale_color_viridis(trans = "log") +
   theme_few()
 
+##
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()
 
+##
 gapminder %>% filter(gdpPercap > 60000)
 
+##
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_hex()
 
+##
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_density2d(aes(color = ..level..), bins = 20) +
   scale_color_viridis()
 
+##
 p <- ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point(aes(color = continent, size = pop), alpha = 0.8) +
   scale_x_continuous(trans = 'log') +
@@ -156,6 +181,7 @@ gapminder_means <- gapminder %>%
             pop = mean(pop),
             gdpPercap = mean(gdpPercap))
 
+##
 plot_dat <- left_join(gapminder_means, country_df, by = "country")
 
 ggplot(plot_dat) +
