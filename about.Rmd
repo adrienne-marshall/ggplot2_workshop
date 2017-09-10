@@ -1,5 +1,5 @@
 ---
-title: "About This Website"
+title: "Content from University of Idaho library workshop series"
 ---
 
 More about this website.
