@@ -1,10 +1,11 @@
 #Load libraries: ------------
 
 #Data organizing:
-library(tidyverse)
+library(dplyr)
 library(data.table)
 
 #Palettes and visualization:
+library(ggplot2)
 library(viridis)
 library(RColorBrewer)
 library(wesanderson)
