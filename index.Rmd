@@ -31,11 +31,12 @@ library(revealjs)
 ```
 
 
+
 ## What is ggplot2?
 
 -  an R package for data visualization
 
-- implements the "grammar of graphics"
+- stands for "grammar of graphics"
 
 
 ## Why ggplot2?
@@ -52,43 +53,48 @@ library(revealjs)
 
 - Reproducible figures
 
+- You can make anything!
+
+## Goals for this wokrshop
+
+Teach you enough that you know how to teach yourself more!
+
 ## Goals for today
 
 Teach you enough that you know how to teach yourself more!
 
-- Introduce "grammar of graphics" concepts
+- Introduce "grammar of graphics" structure
 
 - Practice!
       + samples with built-in data
       + preparing data
       + samples with (more interesting?) data
+      
+- Send you away with a list of resouces (including these slides)
 
 
-## Grammar of graphics
+## Code structure:
+Grammar of graphics
 
-- data with variables mapped to aesthetics
+```{r ggplot sample, eval = FALSE}
+ggplot(data = diamonds, aes(x = carat, y = price, color = clarity)) +
+  geom_point() +
+  facet_grid(color ~ cut)
+```
 
-- one or more geometric layers 
-
-- a scale for each aesthetic mapping
-
-- a coordinate system
-
-- a facet specification
-
-If this is confusing, don't worry - the main message here is that there is a structured grammar underlying ggplot2. 
 
 ## Let's try it!
 
-1. Download scripts from the following site: 
+1. Download scripts from the following site: https://is.gd/IYoXwA
 
-2. Open RStudio
+2. Open RStudio.
 
 3. In RStudio, open "install_packages.R". Highlight the text and click "Run".
 
 4. Still in RStudio, open "workshop_script.R". We'll work from this for the rest of the presentation. 
 
-## Let's try it!
+
+## Okay, now let's try it!
 
 First, we need data. 
 
@@ -140,8 +146,6 @@ ggplot(data = diamonds,
   geom_point()
 
 ```
-
-Putting `rcolor = clarity` outside of the "aesthetics" call meant that ggplot didn't know that it was supposed to map data to the "color" aesthetic. 
 
 ## We could get this instead:
 
@@ -203,11 +207,11 @@ ggplot(data = diamonds,
 
 ```
 
-## More facets!
+## Two-dimensional facets:
 
 ```{r diamonds11, echo = TRUE, message = FALSE}
-ggplot(data = diamonds, aes(x = carat, y = price)) +
-  geom_point(aes(color = clarity), size = 0.5) +
+ggplot(data = diamonds, aes(x = carat, y = price, color = clarity)) +
+  geom_point(size = 0.5) +
   facet_grid(color~cut)
 ```
 
@@ -240,12 +244,11 @@ ggplot(data = diamonds,
 
 ```
 
-## Adjust color scales:
-
+## Choose colors: scale_color_...
 ```{r diamonds viridis, echo = TRUE, message = FALSE}
 ggplot(data = diamonds, 
        aes(x = price, y = cut, color = cut, fill = cut)) +
-  geom_joy(alpha = 0.6, scale = 5) +
+  geom_joy(alpha = 0.8, scale = 5) +
   scale_fill_viridis(option = "A", discrete = TRUE) +
   scale_color_viridis(option = "A", discrete = TRUE) + 
   theme_few()
@@ -298,23 +301,12 @@ ggplot(iris_long,
 ```
 
 
-## Try out a new dataset:
+## A more interesting dataset:
 
 ```{r look at gapminder}
 kable(head(gapminder))
 ```
 
-## Take a look at the data:
-
-```{r test gapminder}
-ggplot(gapminder,
-       aes(x = year, y = lifeExp, color = gdpPercap)) +
-  geom_line(aes(group = country)) +
-  facet_grid(continent~.) +
-  scale_color_viridis(trans = "log") +
-  theme_few()
-
-```
 
 ## A scatter plot:
 
@@ -323,6 +315,8 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()
 
 ```
+
+Who's the outlier?
 
 ## Who's the outlier?
 
@@ -406,13 +400,15 @@ ggplot(plot_dat) +
 - How could we visually answer those questions?
 
 ## Where to learn more:
-<small>
 
 - Stack Overflow/Google
 - Books:
     + R for Data Science: http://r4ds.had.co.nz/program-intro.html
     + Ggplot2: Elegant graphics for data analysis: https://www.amazon.com/ggplot2-Elegant-Graphics-Data-Analysis/dp/0387981403 (may also be available for free at github).
     + Data visualization for social science: http://socviz.co/
+    
+## Where to learn more:
+
 - Papers:
     + Wickham grammar of graphics: http://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf
     + Wickham tidy data: https://www.jstatsoft.org/article/view/v059i10
@@ -420,10 +416,13 @@ ggplot(plot_dat) +
     + https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
     + http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
     + http://www.ggplot2-exts.org/gallery/
+    
+## Where to learn more:
+
 - Twitter:
     + @hadleywickham, @ClausWilke, @JennyBryan, @RLadiesGlobal, @rstudiotips
     
-</small>
+- This presentation! https://adrienne-marshall.github.io/ggplot2_workshop/index.html
 
 
 
@@ -433,9 +432,3 @@ Thanks!
 <small> Adrienne Marshall
 mars7850@vandals.uidaho.edu
 </small>
-
-
-
-
-
-

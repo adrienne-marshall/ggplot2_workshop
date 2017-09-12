@@ -201,11 +201,17 @@ $(document).ready(function () {
 
 
 <p>This document is the web-based version of a presentation given through the University of Idaho library workshop series on September 12, 2017. The text is fairly sparse because this is primarily a reference based on workshop slides. However, it does provide plenty of examples that scaffold through ggplot2 complexity, and has a list of resources for learning more at the end. Good luck, and have fun!</p>
+<div id="who-are-you" class="section level2">
+<h2>Who are you?</h2>
+</div>
+<div id="who-am-i" class="section level2">
+<h2>Who am I?</h2>
+</div>
 <div id="what-is-ggplot2" class="section level2">
 <h2>What is ggplot2?</h2>
 <ul>
 <li><p>an R package for data visualization</p></li>
-<li><p>implements the “grammar of graphics”</p></li>
+<li><p>stands for “grammar of graphics”</p></li>
 </ul>
 </div>
 <div id="why-ggplot2" class="section level2">
@@ -217,43 +223,45 @@ $(document).ready(function () {
 <li><p>Aesthetically pleasing</p></li>
 <li><p>Built for multi-variate data</p></li>
 <li><p>Reproducible figures</p></li>
+<li><p>You can make anything!</p></li>
 </ul>
+</div>
+<div id="goals-for-this-wokrshop" class="section level2">
+<h2>Goals for this wokrshop</h2>
+<p>Teach you enough that you know how to teach yourself more!</p>
 </div>
 <div id="goals-for-today" class="section level2">
 <h2>Goals for today</h2>
 <p>Teach you enough that you know how to teach yourself more!</p>
 <ul>
-<li><p>Introduce “grammar of graphics” concepts</p></li>
+<li><p>Introduce “grammar of graphics” structure</p></li>
 <li>Practice!
 <ul>
 <li>samples with built-in data</li>
 <li>preparing data</li>
 <li>samples with (more interesting?) data</li>
 </ul></li>
+<li><p>Send you away with a list of resouces (including these slides)</p></li>
 </ul>
 </div>
-<div id="grammar-of-graphics" class="section level2">
-<h2>Grammar of graphics</h2>
-<ul>
-<li><p>data with variables mapped to aesthetics</p></li>
-<li><p>one or more geometric layers</p></li>
-<li><p>a scale for each aesthetic mapping</p></li>
-<li><p>a coordinate system</p></li>
-<li><p>a facet specification</p></li>
-</ul>
-<p>If this is confusing, don’t worry - the main message here is that there is a structured grammar underlying ggplot2.</p>
+<div id="code-structure" class="section level2">
+<h2>Code structure:</h2>
+<p>Grammar of graphics</p>
+<pre class="r"><code>ggplot(data = diamonds, aes(x = carat, y = price, color = clarity)) +
+  geom_point() +
+  facet_grid(color ~ cut)</code></pre>
 </div>
 <div id="lets-try-it" class="section level2">
 <h2>Let’s try it!</h2>
 <ol style="list-style-type: decimal">
-<li><p>Download scripts from the following site:</p></li>
-<li><p>Open RStudio</p></li>
+<li><p>Download scripts from the following site: <a href="https://is.gd/IYoXwA" class="uri">https://is.gd/IYoXwA</a></p></li>
+<li><p>Open RStudio.</p></li>
 <li><p>In RStudio, open “install_packages.R”. Highlight the text and click “Run”.</p></li>
 <li><p>Still in RStudio, open “workshop_script.R”. We’ll work from this for the rest of the presentation.</p></li>
 </ol>
 </div>
-<div id="lets-try-it-1" class="section level2">
-<h2>Let’s try it!</h2>
+<div id="okay-now-lets-try-it" class="section level2">
+<h2>Okay, now let’s try it!</h2>
 <p>First, we need data.</p>
 <p>Let’s use the built-in R dataset, “diamonds”.</p>
 <table>
@@ -378,7 +386,6 @@ $(document).ready(function () {
        aes(x = carat, y = price), color = clarity) +
   geom_point()</code></pre>
 <p><img src="index_files/figure-html/diamonds5-1.png" width="672" /></p>
-<p>Putting <code>rcolor = clarity</code> outside of the “aesthetics” call meant that ggplot didn’t know that it was supposed to map data to the “color” aesthetic.</p>
 </div>
 <div id="we-could-get-this-instead" class="section level2">
 <h2>We could get this instead:</h2>
@@ -429,10 +436,10 @@ $(document).ready(function () {
   facet_wrap(~cut)</code></pre>
 <p><img src="index_files/figure-html/diamonds10-1.png" width="672" /></p>
 </div>
-<div id="more-facets" class="section level2">
-<h2>More facets!</h2>
-<pre class="r"><code>ggplot(data = diamonds, aes(x = carat, y = price)) +
-  geom_point(aes(color = clarity), size = 0.5) +
+<div id="two-dimensional-facets" class="section level2">
+<h2>Two-dimensional facets:</h2>
+<pre class="r"><code>ggplot(data = diamonds, aes(x = carat, y = price, color = clarity)) +
+  geom_point(size = 0.5) +
   facet_grid(color~cut)</code></pre>
 <p><img src="index_files/figure-html/diamonds11-1.png" width="672" /></p>
 </div>
@@ -459,11 +466,11 @@ $(document).ready(function () {
   geom_joy()</code></pre>
 <p><img src="index_files/figure-html/diamonds14-1.png" width="672" /></p>
 </div>
-<div id="adjust-color-scales" class="section level2">
-<h2>Adjust color scales:</h2>
+<div id="choose-colors-scale_color_" class="section level2">
+<h2>Choose colors: scale_color_…</h2>
 <pre class="r"><code>ggplot(data = diamonds, 
        aes(x = price, y = cut, color = cut, fill = cut)) +
-  geom_joy(alpha = 0.6, scale = 5) +
+  geom_joy(alpha = 0.8, scale = 5) +
   scale_fill_viridis(option = &quot;A&quot;, discrete = TRUE) +
   scale_color_viridis(option = &quot;A&quot;, discrete = TRUE) + 
   theme_few()</code></pre>
@@ -599,8 +606,8 @@ kable(head(iris_long))</code></pre>
   theme_bw()</code></pre>
 <p><img src="index_files/figure-html/iris%20plot%20polar-1.png" width="672" /></p>
 </div>
-<div id="try-out-a-new-dataset" class="section level2">
-<h2>Try out a new dataset:</h2>
+<div id="a-more-interesting-dataset" class="section level2">
+<h2>A more interesting dataset:</h2>
 <pre class="r"><code>kable(head(gapminder))</code></pre>
 <table>
 <thead>
@@ -665,21 +672,12 @@ kable(head(iris_long))</code></pre>
 </tbody>
 </table>
 </div>
-<div id="take-a-look-at-the-data" class="section level2">
-<h2>Take a look at the data:</h2>
-<pre class="r"><code>ggplot(gapminder,
-       aes(x = year, y = lifeExp, color = gdpPercap)) +
-  geom_line(aes(group = country)) +
-  facet_grid(continent~.) +
-  scale_color_viridis(trans = &quot;log&quot;) +
-  theme_few()</code></pre>
-<p><img src="index_files/figure-html/test%20gapminder-1.png" width="672" /></p>
-</div>
 <div id="a-scatter-plot" class="section level2">
 <h2>A scatter plot:</h2>
 <pre class="r"><code>ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()</code></pre>
 <p><img src="index_files/figure-html/gapminder%20plots-1.png" width="672" /></p>
+<p>Who’s the outlier?</p>
 </div>
 <div id="whos-the-outlier" class="section level2">
 <h2>Who’s the outlier?</h2>
@@ -755,7 +753,6 @@ plot_dat &lt;- left_join(gapminder_means, country_df, by = &quot;country&quot;)<
 </div>
 <div id="where-to-learn-more" class="section level2">
 <h2>Where to learn more:</h2>
-<p><small></p>
 <ul>
 <li>Stack Overflow/Google</li>
 <li>Books:
@@ -764,6 +761,11 @@ plot_dat &lt;- left_join(gapminder_means, country_df, by = &quot;country&quot;)<
 <li>Ggplot2: Elegant graphics for data analysis: <a href="https://www.amazon.com/ggplot2-Elegant-Graphics-Data-Analysis/dp/0387981403" class="uri">https://www.amazon.com/ggplot2-Elegant-Graphics-Data-Analysis/dp/0387981403</a> (may also be available for free at github).</li>
 <li>Data visualization for social science: <a href="http://socviz.co/" class="uri">http://socviz.co/</a></li>
 </ul></li>
+</ul>
+</div>
+<div id="where-to-learn-more-1" class="section level2">
+<h2>Where to learn more:</h2>
+<ul>
 <li>Papers:
 <ul>
 <li>Wickham grammar of graphics: <a href="http://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf" class="uri">http://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf</a></li>
@@ -775,12 +777,17 @@ plot_dat &lt;- left_join(gapminder_means, country_df, by = &quot;country&quot;)<
 <li><a href="http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html" class="uri">http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html</a></li>
 <li><a href="http://www.ggplot2-exts.org/gallery/" class="uri">http://www.ggplot2-exts.org/gallery/</a></li>
 </ul></li>
+</ul>
+</div>
+<div id="where-to-learn-more-2" class="section level2">
+<h2>Where to learn more:</h2>
+<ul>
 <li>Twitter:
 <ul>
 <li><span class="citation">@hadleywickham</span>, <span class="citation">@ClausWilke</span>, <span class="citation">@JennyBryan</span>, <span class="citation">@RLadiesGlobal</span>, <span class="citation">@rstudiotips</span></li>
 </ul></li>
+<li>This presentation! <a href="https://adrienne-marshall.github.io/ggplot2_workshop/index.html" class="uri">https://adrienne-marshall.github.io/ggplot2_workshop/index.html</a></li>
 </ul>
-<p></small></p>
 </div>
 <div id="questions" class="section level2">
 <h2>Questions?</h2>
