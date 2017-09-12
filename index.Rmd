@@ -421,13 +421,8 @@ ggplot(plot_dat) +
 
 - Twitter:
     + @hadleywickham, @ClausWilke, @JennyBryan, @RLadiesGlobal, @rstudiotips
-    
-- This presentation! https://adrienne-marshall.github.io/ggplot2_workshop/index.html
-
-
 
 ## Questions?
-Thanks!
 
 <small> Adrienne Marshall
 mars7850@vandals.uidaho.edu
