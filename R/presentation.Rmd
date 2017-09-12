@@ -46,7 +46,7 @@ library(revealjs)
 
 -  an R package for data visualization
 
-- implements the "grammar of graphics"
+- stands for "grammar of graphics"
 
 
 ## Why ggplot2?
@@ -62,6 +62,8 @@ library(revealjs)
 - Built for multi-variate data
 
 - Reproducible figures
+
+- You can make anything!
 
 ## London population over time:
 
@@ -99,7 +101,7 @@ knitr::include_graphics("../samples/world_flows.jpg")
 <small>https://twitter.com/bettermeasured/status/885956556046643200</small>
 
 
-## Plant structure
+## Pretty plant drawing
 
 ```{r image 6, out.width = "300px", echo = FALSE}
 knitr::include_graphics("../samples/plant1.png")
@@ -128,17 +130,18 @@ Teach you enough that you know how to teach yourself more!
 
 Teach you enough that you know how to teach yourself more!
 
-- Introduce "grammar of graphics" concepts
+- Introduce "grammar of graphics" structure
 
 - Practice!
       + samples with built-in data
       + preparing data
       + samples with (more interesting?) data
       
-- Send you away with a list of resouces
+- Send you away with a list of resouces (including these slides)
 
 
-## Grammar of graphics
+## Code structure:
+Grammar of graphics
 
 ```{r ggplot sample, eval = FALSE}
 ggplot(data = diamonds, aes(x = carat, y = price, color = clarity)) +
@@ -151,7 +154,7 @@ ggplot(data = diamonds, aes(x = carat, y = price, color = clarity)) +
 
 1. Download scripts from the following site: https://is.gd/IYoXwA
 
-2. Open RStudio
+2. Open RStudio.
 
 3. In RStudio, open "install_packages.R". Highlight the text and click "Run".
 
@@ -271,11 +274,11 @@ ggplot(data = diamonds,
 
 ```
 
-## More facets!
+## Two-dimensional facets:
 
 ```{r diamonds11, echo = TRUE, message = FALSE}
-ggplot(data = diamonds, aes(x = carat, y = price)) +
-  geom_point(aes(color = clarity), size = 0.5) +
+ggplot(data = diamonds, aes(x = carat, y = price, color = clarity)) +
+  geom_point(size = 0.5) +
   facet_grid(color~cut)
 ```
 
@@ -312,7 +315,7 @@ ggplot(data = diamonds,
 ```{r diamonds viridis, echo = TRUE, message = FALSE}
 ggplot(data = diamonds, 
        aes(x = price, y = cut, color = cut, fill = cut)) +
-  geom_joy(alpha = 0.6, scale = 5) +
+  geom_joy(alpha = 0.8, scale = 5) +
   scale_fill_viridis(option = "A", discrete = TRUE) +
   scale_color_viridis(option = "A", discrete = TRUE) + 
   theme_few()
@@ -365,7 +368,7 @@ ggplot(iris_long,
 ```
 
 
-## Try out a new dataset:
+## A more interesting dataset:
 
 ```{r look at gapminder}
 kable(head(gapminder))
