@@ -458,14 +458,14 @@ $(document).ready(function () {
 <h2>Try an extension:</h2>
 <pre class="r"><code>ggplot(data = diamonds, 
        aes(x = price, y = cut)) +
-  geom_joy()</code></pre>
+  geom_density_ridges()</code></pre>
 <p><img src="index_files/figure-html/diamonds14-1.png" width="672" /></p>
 </div>
 <div id="choose-colors-scale_color_" class="section level2">
 <h2>Choose colors: scale_color_…</h2>
 <pre class="r"><code>ggplot(data = diamonds, 
        aes(x = price, y = cut, color = cut, fill = cut)) +
-  geom_joy(alpha = 0.8, scale = 5) +
+  geom_density_ridges(alpha = 0.8, scale = 5) +
   scale_fill_viridis(option = &quot;A&quot;, discrete = TRUE) +
   scale_color_viridis(option = &quot;A&quot;, discrete = TRUE) + 
   theme_few()</code></pre>
@@ -475,7 +475,7 @@ $(document).ready(function () {
 <h2>Another color scale:</h2>
 <pre class="r"><code>ggplot(data = diamonds, 
        aes(x = price, y = cut, fill = cut)) +
-  geom_joy(alpha = 1, scale = 5) +
+  geom_density_ridges(alpha = 1, scale = 5) +
   scale_fill_manual(values = wes_palette(&quot;Darjeeling&quot;)) +
   theme_few()</code></pre>
 <p><img src="index_files/figure-html/diamonds%20wes-1.png" width="672" /></p>

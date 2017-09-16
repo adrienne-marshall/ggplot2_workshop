@@ -20,3 +20,5 @@ revealjs
 bindrcpp
 hexbin
 maps
+viridisLite
+ggridges
