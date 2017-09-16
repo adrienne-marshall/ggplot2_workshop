@@ -27,7 +27,7 @@ library(viridis)
 library(RColorBrewer)
 library(wesanderson)
 library(ggthemes)
-library(ggjoy)
+library(ggridges)
 
 #Data
 library(gapminder)
@@ -159,6 +159,8 @@ ggplot(data = diamonds, aes(x = carat, y = price, color = clarity)) +
 3. In RStudio, open "install_packages.R". Highlight the text and click "Run".
 
 4. Still in RStudio, open "workshop_script.R". We'll work from this for the rest of the presentation. 
+
+5. Load packages with the "library" commands at the top of the script.
 
 
 ## Okay, now let's try it!
@@ -307,7 +309,7 @@ ggplot(data = diamonds,
 ```{r diamonds14, echo = TRUE, message = FALSE}
 ggplot(data = diamonds, 
        aes(x = price, y = cut)) +
-  geom_joy()
+  geom_density_ridges()
 
 ```
 
@@ -315,7 +317,7 @@ ggplot(data = diamonds,
 ```{r diamonds viridis, echo = TRUE, message = FALSE}
 ggplot(data = diamonds, 
        aes(x = price, y = cut, color = cut, fill = cut)) +
-  geom_joy(alpha = 0.8, scale = 5) +
+  geom_density_ridges(alpha = 0.8, scale = 5) +
   scale_fill_viridis(option = "A", discrete = TRUE) +
   scale_color_viridis(option = "A", discrete = TRUE) + 
   theme_few()
@@ -326,7 +328,7 @@ ggplot(data = diamonds,
 ```{r diamonds wes, echo = TRUE, message = FALSE}
 ggplot(data = diamonds, 
        aes(x = price, y = cut, fill = cut)) +
-  geom_joy(alpha = 1, scale = 5) +
+  geom_density_ridges(alpha = 1, scale = 5) +
   scale_fill_manual(values = wes_palette("Darjeeling")) +
   theme_few()
 
@@ -428,6 +430,10 @@ p <- ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 
 ```{r view gapminder faceted, fig.height = 5, fig.width = 9}
 p
+
+tiff("test_plot.tiff", width = 9, height =6, res = 300, units = 'in')
+p
+dev.off()
 
 ```
 
